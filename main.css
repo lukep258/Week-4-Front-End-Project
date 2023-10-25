@@ -2,6 +2,12 @@
     width:100%;
     height:5%;
 }
-#body{
+#resultHeader{
+    display:none;
+}
+#homeBody{
+
+}
+#resultBody{
 
 }

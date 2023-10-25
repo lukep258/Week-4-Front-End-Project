@@ -1,11 +1,13 @@
-const apiKey = 'RGAPI-cc9d0728-3379-4b6e-a3d6-398520ba9015'
+const apiKey = 'RGAPI-d7154da7-e3c5-4f5d-a5c4-123964ca73a3'
 const playerSample = {}
 const matches = {}
 const championHistory = {}
 
 const init = () =>{
-    const searchEvent = document.getElementById('searchButton')
-    searchEvent.addEventListener('click',search)
+    const homeSearch = document.getElementById('homeButton')
+    const followSearch = document.getElementById('followupButton')
+    homeSearch.addEventListener('click',()=>{search('homeInput')})
+    followSearch.addEventListener('click',()=>{search('followupInput')})
     sampleGather()
 }
 
@@ -100,9 +102,10 @@ const addMatchData = (matchRef,data)=>{
     data.info.teams[0].win?currentMatch.winners=0:currentMatch.winners=1
     for(let l=0;l<data.info.participants.length;l++){
         const responsePlayer = data.info.participants[l]
+        const championName = responsePlayer.championName.toLowerCase()
         currentMatch.participant.push({
             summonerId: responsePlayer.summonerId,
-            champion: responsePlayer.championName,
+            champion: championName,
             level: responsePlayer.champLevel,
             position: responsePlayer.teamPosition,
             goldEarned: responsePlayer.goldEarned,
@@ -110,18 +113,25 @@ const addMatchData = (matchRef,data)=>{
             damageDealt: responsePlayer.totalDamageDealtToChampions,
             damageTaken: responsePlayer.totalDamageTaken,
             visionScore: responsePlayer.visionScore,
-            team: (responsePlayer.teamid/100)-1,
+            team: (responsePlayer.teamId/100)-1,
             kda: [responsePlayer.kills,responsePlayer.deaths,responsePlayer.assists],
-            items: [responsePlayer.item0,responsePlayer.item1,responsePlayer.item2,responsePlayer.item3,responsePlayer.item4,responsePlayer.item5,responsePlayer.item6]
+            items: [responsePlayer.item0,responsePlayer.item1,responsePlayer.item2,responsePlayer.item3,responsePlayer.item4,responsePlayer.item5,responsePlayer.item6],
+            summonerSpells: [responsePlayer.summoner1Id,responsePlayer.summoner2Id],
+            runes: [responsePlayer.perks.styles[0].selections[0].perk,responsePlayer.perks.styles[0].selections[1].perk,responsePlayer.perks.styles[0].selections[2].perk,responsePlayer.perks.styles[0].selections[3].perk,responsePlayer.perks.styles[1].selections[0].perk,responsePlayer.perks.styles[1].selections[1].perk,responsePlayer.perks.statPerks.offense,responsePlayer.perks.statPerks.flex,responsePlayer.perks.statPerks.defense]
+
         })
-        if(championHistory[responsePlayer.championName]){championHistory[responsePlayer.championName].push(currentMatch)
-        }else{championHistory[responsePlayer.championName]=[currentMatch];console.log(responsePlayer.championName)}
+        if(championHistory[championName]){
+            championHistory[championName].push(matchRef)
+        }else{
+            championHistory[championName]=[matchRef]
+            // console.log(championName)
+        }
     }
 
 }
 
-const search = ()=>{
-    const searchInput = document.getElementById('searchInput').value
+const search = (homeorfollow)=>{
+    const searchInput = document.getElementById(homeorfollow).value.toLowerCase()
     console.log(championHistory[searchInput])
     
 }

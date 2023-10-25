@@ -43,7 +43,10 @@ matches{
                 team: 1
                 visionscore: 1
                 ccImpact:1
-                cs:
+                cs:1
+                summonerspell1:1
+                summonerspell2:1
+                runes:[1,2,3]
             },
             1:{...},
             2:{...}
