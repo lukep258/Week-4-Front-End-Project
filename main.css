@@ -1,13 +1,66 @@
-#header{
-    width:100%;
-    height:5%;
+body{
+    margin:0;
+    background-color: beige;
 }
+em{
+    font-family:"Berthold Akzidenz Condensed";
+    font-size: 10vh;
+    font-weight:900;
+    font-style: italic;
+    color: white;
+}
+
+
+#header{
+    display: flex;
+    width:100%;
+    height:10%;
+    margin: 0;
+    background-color: black;
+}
+h1{
+    margin: 0 1% 0 0;
+    font-family:"Berthold Akzidenz Condensed";
+    font-size: 10vh;
+    font-weight:900;
+    font-style: italic;
+    color: blue;
+}
+
+
 #resultHeader{
+    width:100%;
+    height:10%;
+    margin: 0;
+    background-color: black;
     display:none;
 }
+
+
 #homeBody{
+    width:100%;
+    margin:0;
+    padding-top:15%;
+}
+h2{
+    margin: 0;
+    font-family:"Berthold Akzidenz Condensed";
+    font-size: 10vh;
+    font-weight:900;
+    color: white;
+    text-align: center;
+}
+#homeinputstuff{
+    display:block;
+    margin:auto auto 50% auto;
+    width:35%;
+}
+#homeInput{
+    border:2px solid white;
 
 }
-#resultBody{
 
+
+#resultBody{
+    width:100%;
 }
