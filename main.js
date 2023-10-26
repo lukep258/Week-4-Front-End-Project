@@ -1,13 +1,21 @@
-const apiKey = 'RGAPI-d7154da7-e3c5-4f5d-a5c4-123964ca73a3'
+const apiKey = 'RGAPI-086e97e6-61d6-4b71-b94e-7ef50b3e5bba'
 const playerSample = {}
 const matches = {}
 const championHistory = {}
 
 const init = () =>{
-    const homeSearch = document.getElementById('homeButton')
-    const followSearch = document.getElementById('followupButton')
-    homeSearch.addEventListener('click',()=>{search('homeInput')})
-    followSearch.addEventListener('click',()=>{search('followupInput')})
+    const homeSearch = document.getElementById('homeInput')
+    const followSearch = document.getElementById('followupInput')
+    homeSearch.addEventListener('keypress',(event)=>{
+        if(event.key === 'Enter'){
+            search('homeInput')
+        }
+    })
+    followSearch.addEventListener('keypress',(event)=>{
+        if(event.key === 'Enter'){
+            search('followupInput')
+        }
+    })
     sampleGather()
 }
 
@@ -132,8 +140,26 @@ const addMatchData = (matchRef,data)=>{
 
 const search = (homeorfollow)=>{
     const searchInput = document.getElementById(homeorfollow).value.toLowerCase()
+    const homeBody = document.getElementById('homeBody')
+    const homeHeader = document.getElementById('header')
+    const followBody = document.getElementById('resultBody')
+    const followHeader = document.getElementById('resultHeader')
+    displaySearch(homeBody,homeHeader,followBody,followHeader)
+
     console.log(championHistory[searchInput])
-    
+}
+
+const displayHome=(homeBody,homeHeader,followBody,followHeader)=>{
+    followBody.style.display = 'none'
+    followHeader.style.display = 'none'
+    homeBody.style.removeProperty('display')
+    homeHeader.style.display = 'flex'
+}
+const displaySearch=(homeBody,homeHeader,followBody,followHeader)=>{
+    followBody.style.removeProperty('display')
+    followHeader.style.display = 'flex'
+    homeBody.style.display = 'none'
+    homeHeader.style.display = 'none'
 }
 
 init()

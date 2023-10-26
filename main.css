@@ -1,14 +1,16 @@
 body{
     margin:0;
-    background-color: beige;
+    background: url('https://38.media.tumblr.com/61b0b7dc6b64a2ddc76b1ad3f4e0b4b3/tumblr_nlo1tjd1qy1upbybro1_1280.gif') repeat center;
+    background-size:cover;
+    height: 75vh;
+    width: 100%;
 }
 em{
     font-family:"Berthold Akzidenz Condensed";
-    font-size: 10vh;
     font-weight:900;
     font-style: italic;
-    color: white;
 }
+
 
 
 #header{
@@ -19,13 +21,15 @@ em{
     background-color: black;
 }
 h1{
-    margin: 0 1% 0 0;
+    margin: 1% 1% 0 0;
     font-family:"Berthold Akzidenz Condensed";
-    font-size: 10vh;
+    font-size: 5vh;
     font-weight:900;
     font-style: italic;
-    color: blue;
+    color: yellow;
 }
+
+
 
 
 #resultHeader{
@@ -39,25 +43,53 @@ h1{
 
 #homeBody{
     width:100%;
+    height: 80%;
     margin:0;
     padding-top:15%;
 }
 h2{
-    margin: 0;
+    width: 30vw;
+    margin: 0 auto 0 auto;
+    display:flex;
     font-family:"Berthold Akzidenz Condensed";
-    font-size: 10vh;
+    font-size: 7vw;
     font-weight:900;
-    color: white;
     text-align: center;
 }
+#build{
+    color:white;
+}
+#stats{
+    color:yellow;
+}
+
 #homeinputstuff{
-    display:block;
-    margin:auto auto 50% auto;
-    width:35%;
+    display:flex;
+    width:30%;
+    height:30px;
+    background-color: white;
+    border:2px solid white;
+    border-radius: 1vw;
+    margin: auto;
+}
+#homeInputBackground{
+    height:100%;
+    aspect-ratio: 1;
+    background-image: url('https://www.clker.com/cliparts/z/1/T/u/9/2/search-icon-hi.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 #homeInput{
+    width:90%;
+    height:100%;
+    margin-left: auto;
+    margin-right: auto;
     border:2px solid white;
-
+    box-sizing: border-box;
+    font-size: 100%;
+}
+#homeInput:focus{
+    outline:none;
 }
 
 
