@@ -66,49 +66,37 @@ const collectMatchIds=(puuid,summonerId)=>{
     .then(data=>{
         playerSample[summonerId].matches=[]
         for(entry of data){
-            matches[entry]={}
             playerSample[summonerId].matches.push(entry);
         }
-        // console.log('matchids logged')
     })
 }
 
 const collectMatchDeet=(i,j)=>{
     const playerSampleArr=Object.entries(playerSample)
     const currentMatch = playerSampleArr[i][1].matches[j]
-    // console.log(`${i}/${playerSampleArr.length}`)
-    // console.log(`${j}/${playerSampleArr[i][1].matches.length}`)
-    // console.log(currentMatch)
 
     fetch(`https://americas.api.riotgames.com/lol/match/v5/matches/${currentMatch}?api_key=${apiKey}`)
     .then(response=>response.json())
     .then(data=>{
-        // console.log(data)
-        // console.log('match')
         addMatchData(currentMatch,data)
         if(i===(playerSampleArr.length-1)&&j===(playerSampleArr[i][1].matches.length-1)){
             setTimeout(()=>{collectMatchDeet(0,0)},5000)
-            // console.log('restarting match deets')
         }else if(j===(playerSampleArr[i][1].matches.length-1)){
             const index = i+1
             setTimeout(()=>{collectMatchDeet(index,0)},5000)
-            // console.log('moving to the next player')
         }else{
             const jndex = j+1
             setTimeout(()=>{collectMatchDeet(i,jndex)},5000)
-            // console.log('getting next match')
         }
     })
-    fetch(`https://americas.api.riotgames.com/lol/match/v5/matches/${currentMatch}/timeline?api_key=${apiKey}`)
-    .then(response=>response.json())
-    .then(data=>{
-        // console.log(data)
-        // console.log('match timeline')
-    })
-    // console.log(playerSampleArr[i][1].matches[j])
+    // fetch(`https://americas.api.riotgames.com/lol/match/v5/matches/${currentMatch}/timeline?api_key=${apiKey}`)
+    // .then(response=>response.json())
+    // .then(data=>{
+    // })
 }
 
 const addMatchData = (matchRef,data)=>{
+    matches[matchRef] = []
     const currentMatch = matches[matchRef]
 
     currentMatch.participant = [];
@@ -141,7 +129,7 @@ const addMatchData = (matchRef,data)=>{
             championHistory[championName]={}
             championHistory[championName][matchRef] = l
         }
-        console.log(championName)
+        console.log(championName + Object.entries(championHistory[championName]).length)
     }
 }
 
@@ -180,12 +168,22 @@ const displaySearch=(searchInput)=>{
     homeBody.style.display = 'none'
     homeHeader.style.display = 'none'
 
+    const newList = document.createElement('ul')
+    followBody.removeChild(document.getElementById('buildList'))
+    followBody.append(newList)
+    newList.setAttribute('id','buildList')
+
+    sortMatchesbyTime(searchInput)
     buildlistItems(searchInput)
     
 }
 const buildlistItems=(searchInput)=>{
-    const ulist = document.getElementsByTagName('ul')[0]
+    const ulist = document.getElementById('buildList')
     for(matchid in championHistory[searchInput]){
+        console.log(matchid)
+        console.log(championHistory[searchInput])
+        console.log(matches[matchid])
+        console.log(matches)
         const participantData = matches[matchid].participant[championHistory[searchInput][matchid]]
         const litem = document.createElement('li')
         ulist.appendChild(litem)
@@ -202,7 +200,6 @@ const buildlistItems=(searchInput)=>{
         const listName = document.createElement('p')
         litem.append(listName)
         listName.setAttribute('class','listPlayer')
-        console.log(participantData.summonerName)
         listName.textContent = participantData.summonerName
 
         const kdaPost = document.createElement('p')
@@ -235,12 +232,39 @@ const buildlistItems=(searchInput)=>{
     }
 }
 const timeAgo=(gameTime)=>{
-    const timeDiff = new Date()[Symbol.toPrimitive]('number')
-    timeDiff = math.floor((timeDiff-gameTime)/1000)
+    let timeDiff = new Date()[Symbol.toPrimitive]('number')
+    timeDiff = (timeDiff-gameTime)/1000
     if(timeDiff<60){return `${timeDiff}s ago`}
-    else if(timeDiff<360){return `${Math.floor(timeDiff/60)}min ago`}
-    else if(timeDiff<21600){return `${Math.floor(timeDiff/360)}hr ago`}
-    else{return `${Math.floor(timeDiff/21600)}d ago`}
+    else if(timeDiff<3600){return `${Math.floor(timeDiff/60)}m ago`}
+    else if(timeDiff<86400){return `${Math.floor(timeDiff/3600)}h ago`}
+    else{return `${Math.floor(timeDiff/86400)}d ago`}
+}
+const sortMatchesbyTime=(champion)=>{
+    const unsortedTime = []
+    let matchHistoryCopy = {}
+    for(matchid in championHistory[champion]){
+        unsortedTime.push(matchid)
+        let index=unsortedTime.length-1
+        if(index>0){
+            console.log(unsortedTime)
+            console.log(index-1)
+            console.log(matches)
+            while(matches[unsortedTime[index-1]].gameStart<matches[matchid].gameStart){
+                let temp = unsortedTime[index-1]
+                unsortedTime[index-1]=matchid
+                unsortedTime[index]=temp
+                index--
+            }
+        }
+    }
+    for(matchid of unsortedTime){
+        matchHistoryCopy[matchid] = championHistory[champion][matchid]
+    }
+    championHistory[champion]=matchHistoryCopy
+    console.log(championHistory[champion])
 }
 
+
 init()
+//1698298384643
+// 1698351340311

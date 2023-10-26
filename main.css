@@ -125,14 +125,15 @@ h2{
 
 
 #resultBody{
-    margin:2% auto 0 auto;
+    margin:1% auto 0 auto;
     width:800px;
-    height:80%;
+    height:85%;
     background-color: black;
     display: none;
+    padding-top:1%;
 }
 h3{
-    margin: 0 0 0 2% ;
+    margin: 0 0 5% 2% ;
     color:white;
     font-size:100%;
     font-family: arial;
@@ -145,17 +146,20 @@ h3{
     border: 2px solid grey;
     box-sizing: border-box;
     padding: 0;
+    cursor: pointer;
+    overflow-y:scroll;
 }
 li{
     display:flex block;
     color: white;
-    border-bottom: 2px solid grey;
-    height: 40px;
+    border-bottom: 2px solid rgb(47, 47, 47);
+    height: 70px;
 }
 .listTime{
     margin-top:auto;
     margin-bottom:auto;
     margin-left:1%;
+    width:7.5%;
 }
 .champIcon, .rune, .item1, .item2, .item3, .item4, .item5, .item6, .item7, .summoner1, .summoner2{
     margin-top:auto;
@@ -168,11 +172,13 @@ li{
     margin-top:auto;
     margin-bottom:auto;
     margin-left: 3%;
+    width:10%;
 }
 .listKDA{
     margin-top:auto;
     margin-bottom:auto;
     margin-left:5%;
+    width:5%;
 }
 .champIcon{
     margin-left:2%;
