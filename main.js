@@ -2,10 +2,12 @@ const apiKey = 'RGAPI-086e97e6-61d6-4b71-b94e-7ef50b3e5bba'
 const playerSample = {}
 const matches = {}
 const championHistory = {}
+const clock = new Date()
 
 const init = () =>{
     const homeSearch = document.getElementById('homeInput')
     const followSearch = document.getElementById('followupInput')
+    const homeButton = document.getElementsByTagName('h1')[1]
     homeSearch.addEventListener('keypress',(event)=>{
         if(event.key === 'Enter'){
             search('homeInput')
@@ -16,6 +18,10 @@ const init = () =>{
             search('followupInput')
         }
     })
+    homeButton.addEventListener('click',displayHome)
+
+    // displaySearch(homeBody,homeHeader,followBody,followHeader,'olaf')
+
     sampleGather()
 }
 
@@ -104,15 +110,17 @@ const collectMatchDeet=(i,j)=>{
 
 const addMatchData = (matchRef,data)=>{
     const currentMatch = matches[matchRef]
+
     currentMatch.participant = [];
     currentMatch.gameStart = data.info.gameCreation
     currentMatch.gameDuration = data.info.gameDuration
     data.info.teams[0].win?currentMatch.winners=0:currentMatch.winners=1
+
     for(let l=0;l<data.info.participants.length;l++){
         const responsePlayer = data.info.participants[l]
         const championName = responsePlayer.championName.toLowerCase()
         currentMatch.participant.push({
-            summonerId: responsePlayer.summonerId,
+            summonerName: responsePlayer.summonerName,
             champion: championName,
             level: responsePlayer.champLevel,
             position: responsePlayer.teamPosition,
@@ -126,40 +134,113 @@ const addMatchData = (matchRef,data)=>{
             items: [responsePlayer.item0,responsePlayer.item1,responsePlayer.item2,responsePlayer.item3,responsePlayer.item4,responsePlayer.item5,responsePlayer.item6],
             summonerSpells: [responsePlayer.summoner1Id,responsePlayer.summoner2Id],
             runes: [responsePlayer.perks.styles[0].selections[0].perk,responsePlayer.perks.styles[0].selections[1].perk,responsePlayer.perks.styles[0].selections[2].perk,responsePlayer.perks.styles[0].selections[3].perk,responsePlayer.perks.styles[1].selections[0].perk,responsePlayer.perks.styles[1].selections[1].perk,responsePlayer.perks.statPerks.offense,responsePlayer.perks.statPerks.flex,responsePlayer.perks.statPerks.defense]
-
         })
         if(championHistory[championName]){
-            championHistory[championName].push(matchRef)
+            championHistory[championName][matchRef] = l
         }else{
-            championHistory[championName]=[matchRef]
-            // console.log(championName)
+            championHistory[championName]={}
+            championHistory[championName][matchRef] = l
         }
+        console.log(championName)
     }
-
 }
 
 const search = (homeorfollow)=>{
     const searchInput = document.getElementById(homeorfollow).value.toLowerCase()
+    if(championHistory[searchInput]){
+        displaySearch(searchInput)
+    }else{
+        displaySearch('Invalid input')
+    }
+
+}
+
+const displayHome=()=>{
+    console.log('hello')
     const homeBody = document.getElementById('homeBody')
     const homeHeader = document.getElementById('header')
     const followBody = document.getElementById('resultBody')
     const followHeader = document.getElementById('resultHeader')
-    displaySearch(homeBody,homeHeader,followBody,followHeader)
 
-    console.log(championHistory[searchInput])
-}
-
-const displayHome=(homeBody,homeHeader,followBody,followHeader)=>{
     followBody.style.display = 'none'
     followHeader.style.display = 'none'
-    homeBody.style.removeProperty('display')
+    homeBody.style.display = 'block'
     homeHeader.style.display = 'flex'
 }
-const displaySearch=(homeBody,homeHeader,followBody,followHeader)=>{
-    followBody.style.removeProperty('display')
+const displaySearch=(searchInput)=>{
+    const championh3 = document.getElementsByTagName('h3')[0]
+    const homeBody = document.getElementById('homeBody')
+    const homeHeader = document.getElementById('header')
+    const followBody = document.getElementById('resultBody')
+    const followHeader = document.getElementById('resultHeader')
+    
+    championh3.textContent = `${searchInput.split('')[0].toUpperCase()}${searchInput.split('').splice(1,searchInput.length).join('')}`
+    followBody.style.display = 'block'
     followHeader.style.display = 'flex'
     homeBody.style.display = 'none'
     homeHeader.style.display = 'none'
+
+    buildlistItems(searchInput)
+    
+}
+const buildlistItems=(searchInput)=>{
+    const ulist = document.getElementsByTagName('ul')[0]
+    for(matchid in championHistory[searchInput]){
+        const participantData = matches[matchid].participant[championHistory[searchInput][matchid]]
+        const litem = document.createElement('li')
+        ulist.appendChild(litem)
+
+        const ptime = document.createElement('p')
+        litem.append(ptime)
+        ptime.setAttribute('class','listTime')
+        ptime.textContent = timeAgo(matches[matchid].gameStart)
+
+        const championIcon = document.createElement('div')
+        litem.append(championIcon)
+        championIcon.setAttribute('class','champIcon')
+
+        const listName = document.createElement('p')
+        litem.append(listName)
+        listName.setAttribute('class','listPlayer')
+        console.log(participantData.summonerName)
+        listName.textContent = participantData.summonerName
+
+        const kdaPost = document.createElement('p')
+        litem.append(kdaPost)
+        kdaPost.setAttribute('class','listKDA')
+        kdaPost.textContent = participantData.kda.join('/')
+
+        const primaryRune = document.createElement('div')
+        litem.append(primaryRune)
+        primaryRune.setAttribute('class','rune')
+        // primaryRune.style.backgroundImage = ??
+
+        for(let i=1;i<8;i++){
+            const itemID = participantData.items[i]
+            const item = document.createElement('div')
+            litem.append(item)
+            item.setAttribute('class',`item${i}`)
+            // item.style.backgroundImage = ??
+        }
+
+        const summonerIcon1 = document.createElement('div')
+        litem.append(summonerIcon1)
+        summonerIcon1.setAttribute('class','summoner1')
+        // summonerIcon1.style.backgroundImage = ??
+
+        const summonerIcon2 = document.createElement('div')
+        litem.append(summonerIcon2)
+        summonerIcon2.setAttribute('class','summoner2')
+        // summonerIcon2.style.backgroundImage = ??
+    }
+}
+const timeAgo=(gameTime)=>{
+    const timeDiff = new Date()[Symbol.toPrimitive]('number')
+    timeDiff = math.floor((timeDiff-gameTime)/1000)
+    if(timeDiff<60){return `${timeDiff}s ago`}
+    else if(timeDiff<360){return `${Math.floor(timeDiff/60)}min ago`}
+    else if(timeDiff<21600){return `${Math.floor(timeDiff/360)}hr ago`}
+    else{return `${Math.floor(timeDiff/21600)}d ago`}
 }
 
 init()

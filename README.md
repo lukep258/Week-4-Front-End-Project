@@ -31,27 +31,27 @@ matches{
     matchId1:{
         participants: [
             0:{
+                summonerName: abc,
                 champion: aatrox,
                 level: 1,
                 position: top,
                 goldEarned: 1,
                 items: ['longsword','longsword','black cleaver']
-                kills: 1,
-                deaths: 1,
-                damagedealttoChampions: 1,
-                damagetakenfromChampions: 1,
+                kda: [1,2,3],
+                damageDealt: 1,
+                damageTaken: 1,
                 team: 1
-                visionscore: 1
+                visionScore: 1
                 ccImpact:1
                 cs:1
-                summonerspell1:1
-                summonerspell2:1
-                runes:[1,2,3]
+                team: 0
+                summonerspells:[1,2]
+                runes:[1,2,3,4,5,6,7,8,9]
             },
             1:{...},
             2:{...}
         ]
-        gamestartTime: yyyymmddhhmm
+        gameStart: yyyymmddhhmm
         gameDuration: mmss
         winners: team#
     }
@@ -61,9 +61,14 @@ matches{
 
 CHAMPIONHISTORY is obj of arr
 championsHistory{
-    aatrox: [matchId1,matchId2,matchId3...]
-    ahri: [...]
-    akali: [...]
+    aatrox: {
+        matchId1:1,(participant num)
+        matchId2:1,
+        matchId3:5,
+        ...
+        }
+    ahri: {...}
+    akali: {...}
 }
 */
 

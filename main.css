@@ -2,14 +2,15 @@ body{
     margin:0;
     background: url('https://38.media.tumblr.com/61b0b7dc6b64a2ddc76b1ad3f4e0b4b3/tumblr_nlo1tjd1qy1upbybro1_1280.gif') repeat center;
     background-size:cover;
-    height: 75vh;
-    width: 100%;
+    background-repeat: no-repeat;
+    height:100vh;
 }
 em{
     font-family:"Berthold Akzidenz Condensed";
     font-weight:900;
     font-style: italic;
 }
+
 
 
 
@@ -21,29 +22,20 @@ em{
     background-color: black;
 }
 h1{
-    margin: 1% 1% 0 0;
+    margin: auto 0 auto 0;
     font-family:"Berthold Akzidenz Condensed";
     font-size: 5vh;
     font-weight:900;
     font-style: italic;
     color: yellow;
+    cursor:pointer;
 }
 
 
-
-
-#resultHeader{
-    width:100%;
-    height:10%;
-    margin: 0;
-    background-color: black;
-    display:none;
-}
 
 
 #homeBody{
     width:100%;
-    height: 80%;
     margin:0;
     padding-top:15%;
 }
@@ -86,13 +78,115 @@ h2{
     margin-right: auto;
     border:2px solid white;
     box-sizing: border-box;
-    font-size: 100%;
+    font-size: 2vh;
 }
 #homeInput:focus{
     outline:none;
 }
 
 
-#resultBody{
+
+
+#resultHeader{
     width:100%;
+    height:10%;
+    margin: 0;
+    background-color: black;
+    display:none;
+}
+#followinputstuff{
+    display:flex;
+    width:30%;
+    height:50%;
+    background-color: white;
+    border:2px solid white;
+    border-radius: 1vw;
+    margin: auto 0 auto 3%;
+}
+#followInputBackground{
+    height:100%;
+    aspect-ratio: 1;
+    background-image: url('https://www.clker.com/cliparts/z/1/T/u/9/2/search-icon-hi.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#followupInput{
+    width:80%;
+    height:100%;
+    border:2px solid white;
+    box-sizing: border-box;
+    font-size: 2vw;
+}
+#followupInput:focus{
+    outline:none;
+}
+
+
+
+
+#resultBody{
+    margin:2% auto 0 auto;
+    width:800px;
+    height:80%;
+    background-color: black;
+    display: none;
+}
+h3{
+    margin: 0 0 0 2% ;
+    color:white;
+    font-size:100%;
+    font-family: arial;
+}
+#buildList{
+    background-color: black;
+    margin: 1% auto 0 auto;
+    height:90%;
+    width:90%;
+    border: 2px solid grey;
+    box-sizing: border-box;
+    padding: 0;
+}
+li{
+    display:flex block;
+    color: white;
+    border-bottom: 2px solid grey;
+    height: 40px;
+}
+.listTime{
+    margin-top:auto;
+    margin-bottom:auto;
+    margin-left:1%;
+}
+.champIcon, .rune, .item1, .item2, .item3, .item4, .item5, .item6, .item7, .summoner1, .summoner2{
+    margin-top:auto;
+    margin-bottom:auto;
+    height: 30px;
+    aspect-ratio: 1;
+    border: 0.5px solid white
+}
+.listPlayer{
+    margin-top:auto;
+    margin-bottom:auto;
+    margin-left: 3%;
+}
+.listKDA{
+    margin-top:auto;
+    margin-bottom:auto;
+    margin-left:5%;
+}
+.champIcon{
+    margin-left:2%;
+}
+.rune{
+    margin-left:5%;
+    margin-right:3%;
+}
+.item1, .item2, .item3, .item4, .item5, .item6, .item7{
+    margin-left:0.5%;
+}
+.summoner1{
+    margin-left: 3%;
+}
+.summoner2{
+    margin-left: 0.5%;
 }
