@@ -8,6 +8,7 @@
     <title>BuildStats</title>
 </head>
 <body>
+    <video autoplay loop muted preload="auto" src="https://static.moewalls.com/videos/preview/2021/new-season-in-league-of-legends-preview.mp4"></video>
     <div id="header">
         <h1>BS</h1>
     </div>
@@ -26,10 +27,29 @@
         </div>
     </div>
     <div id="resultBody">
-        <h3>Champion</h3>
-        <ul id="buildList"></ul>
+        <div id="titleContainer">
+            <img id="searchedChamp">
+            <div style="display:block; width:100%">
+                <h3>Champion</h3>
+                <div style="display:flex">
+                    <p id="gamesPlayed"></p>
+                    <p id="winRate"></p>
+                </div>
+            </div>
+        </div>
+        <div id="countersAndPlayInto">
+            <div id="counters">
+                <p class="counterText">Counters:</p>
+                <div class="playAgainst"></div>
+            </div>
+            <div id="winsAgainst">
+                <p class="counterText">Plays into:</p>
+                <div class="playAgainst"></div>
+            </div>
+        </div>
+        <ul id="buildList">
+        </ul>
         <div id="buildDetail"></div>
-        <div id="counters"></div>
     </div>
 </body>
 </html>

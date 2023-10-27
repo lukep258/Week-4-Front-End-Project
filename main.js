@@ -105,6 +105,7 @@ const addMatchData = (matchRef,data)=>{
     currentMatch.participant = [];
     currentMatch.gameStart = data.info.gameCreation
     currentMatch.gameDuration = data.info.gameDuration
+    currentMatch.laners = {TOP:[],MIDDLE:[],BOTTOM:[],UTILITY:[],JUNGLE:[]}
     data.info.teams[0].win?currentMatch.winners=0:currentMatch.winners=1
 
     for(let l=0;l<data.info.participants.length;l++){
@@ -140,6 +141,7 @@ const addMatchData = (matchRef,data)=>{
             championHistory[championName]={}
             championHistory[championName][matchRef] = l
         }
+        currentMatch.laners[responsePlayer.teamPosition].push(responsePlayer.championName)
         console.log(championName+Object.entries(championHistory[championName]).length)
     }
 }
@@ -174,8 +176,9 @@ const displaySearch=(searchInput)=>{
     const followBody = document.getElementById('resultBody')
     const followHeader = document.getElementById('resultHeader')
     
+    
     championh3.textContent = `${searchInput.split('')[0].toUpperCase()}${searchInput.split('').splice(1,searchInput.length).join('')}`
-    followBody.style.display = 'block'
+    followBody.style.display = 'flex'
     followHeader.style.display = 'flex'
     homeBody.style.display = 'none'
     homeHeader.style.display = 'none'
@@ -190,6 +193,13 @@ const displaySearch=(searchInput)=>{
 }
 const buildlistItems=(searchInput)=>{
     const ulist = document.getElementById('buildList')
+    const totalAgainst = {}
+    const winsAgainst = {}
+    const counters = {}
+    let champWins = 0;
+    if(searchInput==='wukong'){
+        searchInput='monkeyking'
+    }
     for(matchid in championHistory[searchInput]){
         const participantData = matches[matchid].participant[championHistory[searchInput][matchid]]
         const litem = document.createElement('li')
@@ -201,16 +211,25 @@ const buildlistItems=(searchInput)=>{
         ptime.textContent = timeAgo(matches[matchid].gameStart)
 
         const championIcon = document.createElement('div')
+        const searchedChamp = document.getElementById('searchedChamp')
         let champImgName = ''
-        if(searchInput==='fiddlesticks'){
-            champImgName =  'Fiddlesticks'
-        }
-        else{
-            champImgName =  matches[matchid].participant[championHistory[searchInput][matchid]].ogChampName
-        }
+        let enemyLaner = ''
+        matches[matchid].laners[participantData.position][0].toLowerCase()===searchInput?enemyLaner=matches[matchid].laners[participantData.position][1]:enemyLaner=matches[matchid].laners[participantData.position][0]
         litem.append(championIcon)
+        searchInput==='fiddlesticks'?champImgName='Fiddlesticks':champImgName=matches[matchid].participant[championHistory[searchInput][matchid]].ogChampName
+        if(enemyLaner==='FiddleSticks'){enemyLaner='Fiddlesticks'}
+        totalAgainst[enemyLaner]?totalAgainst[enemyLaner]++:totalAgainst[enemyLaner]=1;
+        if(participantData.team===matches[matchid].winners){
+            champWins++
+            winsAgainst[enemyLaner]?winsAgainst[enemyLaner]++:winsAgainst[enemyLaner]=1
+            championIcon.style.border = '0.5px solid green'
+        }else{
+            counters[enemyLaner]?counters[enemyLaner]++:counters[enemyLaner]=1
+            championIcon.style.border = '0.5px solid red'
+        }
         championIcon.setAttribute('class','champIcon')
         championIcon.style.backgroundImage = `url(http://ddragon.leagueoflegends.com/cdn/13.21.1/img/champion/${champImgName}.png)`
+        searchedChamp.setAttribute('src',`http://ddragon.leagueoflegends.com/cdn/13.21.1/img/champion/${champImgName}.png`)
 
         const listName = document.createElement('p')
         litem.append(listName)
@@ -222,13 +241,18 @@ const buildlistItems=(searchInput)=>{
         kdaPost.setAttribute('class','listKDA')
         kdaPost.textContent = participantData.kda.join('/')
 
+        const enemyIcon = document.createElement('div')
+        litem.append(enemyIcon)
+        enemyIcon.setAttribute('class','enemyChamp')
+        enemyIcon.style.backgroundImage = `url(http://ddragon.leagueoflegends.com/cdn/13.21.1/img/champion/${enemyLaner}.png)`
+
         const primaryRune = document.createElement('div')
-        console.log(participantData)
-        console.log(participantData.runes[0])
-        console.log(runeLib[participantData.runes[0]])
         let runeDir = ''
         if(runeLib[participantData.runes[0]][1]==='LethalTempo'){
             runeDir = `${runeLib[participantData.runes[0]][0]}/${runeLib[participantData.runes[0]][1]}/${runeLib[participantData.runes[0]][1]}Temp`
+        }
+        else if(runeLib[participantData.runes[0]][1]==='Aftershock'){
+            runeDir = `${runeLib[participantData.runes[0]][0]}/Veteran${runeLib[participantData.runes[0]][1]}/Veteran${runeLib[participantData.runes[0]][1]}`
         }
         else{
             runeDir = `${runeLib[participantData.runes[0]][0]}/${runeLib[participantData.runes[0]][1]}/${runeLib[participantData.runes[0]][1]}`
@@ -259,6 +283,85 @@ const buildlistItems=(searchInput)=>{
         summonerIcon2.setAttribute('class','summoner2')
         summonerIcon2.style.backgroundImage = `url(http://ddragon.leagueoflegends.com/cdn/13.21.1/img/spell/${spellId2}.png)`
     }
+    for(enemyChamp in winsAgainst){
+        winsAgainst[enemyChamp]===1?delete winsAgainst[enemyChamp]:winsAgainst[enemyChamp]=Math.floor(winsAgainst[enemyChamp]*100/totalAgainst[enemyChamp])
+    }
+    for(enemyChamp in counters){
+        counters[enemyChamp]===1?delete counters[enemyChamp]:counters[enemyChamp]=Math.floor(counters[enemyChamp]*100/totalAgainst[enemyChamp])
+    }
+
+    const gamesPlayed = document.getElementById('gamesPlayed')
+    const winRate = document.getElementById('winRate')
+    const gameNum = Object.entries(championHistory[searchInput]).length
+    gamesPlayed.textContent = `${gameNum} Total Games`
+    winRate.textContent = `${Math.floor(champWins*100/gameNum)}% winrate`
+
+    
+    const winList = []
+    const counterList = []
+    for(enemyChamp in winsAgainst){
+        winList.push(enemyChamp)
+        let index = winList.length-1
+        while(index>0&&winsAgainst[winList[index]]>winsAgainst[winList[index-1]]){
+            const temp = winList[index]
+            winList[index]=winList[index-1]
+            winList[index-1]=temp;
+            index--
+        }
+    }
+    for(enemyChamp in counters){
+        counterList.push(enemyChamp)
+        let index = counterList.length-1
+        while(index>0&&counters[counterList[index]]>counters[counterList[index-1]]){
+            const temp = counterList[index]
+            counterList[index]=counterList[index-1]
+            counterList[index-1]=temp;
+            index--
+        }
+    }
+    
+    const counterRemoval = document.getElementsByClassName('playAgainst')[0]
+    const playIntoRemoval = document.getElementsByClassName('playAgainst')[1]
+    const allCounters = document.getElementById('counters')
+    const allPlayInto = document.getElementById('winsAgainst')
+    allCounters.removeChild(counterRemoval)
+    allPlayInto.removeChild(playIntoRemoval)
+    const counterContainer = document.createElement('div')
+    const playAgainst = document.createElement('div')
+    allCounters.appendChild(playAgainst)
+    allPlayInto.appendChild(counterContainer)
+    counterContainer.setAttribute('class','playAgainst')
+    playAgainst.setAttribute('class','playAgainst')
+    for(let i=0;i<3;i++){
+        const indvCounterContainer = document.createElement('div')
+        counterContainer.appendChild(indvCounterContainer)
+        indvCounterContainer.setAttribute('class','indvContainer')
+
+        const counterPick = document.createElement('div')
+        const counterChance = document.createElement('p')
+        indvCounterContainer.appendChild(counterChance)
+        indvCounterContainer.appendChild(counterPick)
+        counterPick.setAttribute('class','counterImage')
+        counterChance.setAttribute('class','counterChance')
+        if(counterList[i]==='FiddleSticks'){
+            counterList[i] = 'Fiddlesticks'
+        }
+        counterPick.style.backgroundImage = `url(http://ddragon.leagueoflegends.com/cdn/13.21.1/img/champion/${counterList[i]}.png)`
+        counterChance.textContent = `${counters[counterList[i]]}%`
+
+        const indvPlayContainer = document.createElement('div')
+        playAgainst.appendChild(indvPlayContainer)
+        indvPlayContainer.setAttribute('class','indvContainer')
+
+        const playPick = document.createElement('div')
+        const playChance = document.createElement('p')
+        indvPlayContainer.appendChild(playPick)
+        indvPlayContainer.appendChild(playChance)
+        playPick.setAttribute('class','counterImage')
+        playChance.setAttribute('class','counterChance')
+        playPick.style.backgroundImage = `url(http://ddragon.leagueoflegends.com/cdn/13.21.1/img/champion/${winList[i]}.png)`
+        playChance.textContent = `${winsAgainst[winList[i]]}%`
+    }
 }
 const timeAgo=(gameTime)=>{
     let timeDiff = new Date()[Symbol.toPrimitive]('number')
@@ -274,15 +377,7 @@ const sortMatchesbyTime=(champion)=>{
     for(matchid in championHistory[champion]){
         unsortedTime.push(matchid)
         let index=unsortedTime.length-1
-        console.log(matches)
-        console.log(unsortedTime)
-        console.log(index)
-        console.log(unsortedTime[index-1])
-        console.log(matchid)
-        console.log(matches[matchid])
-        console.log(matches[unsortedTime[index-1]])
         while(index>0&&matches[unsortedTime[index-1]].gameStart<matches[matchid].gameStart){
-            console.log('up')
             let temp = unsortedTime[index-1]
             unsortedTime[index-1]=matchid
             unsortedTime[index]=temp
@@ -307,7 +402,6 @@ const runeFill=()=>{
     fetch('https://ddragon.canisback.com/13.12.1/data/en_US/runesReforged.json')
     .then(response=>response.json())
     .then(data=>{
-        console.log(data)
         for(tree of data){
             for(slot of tree.slots){
                 for(rune of slot.runes){
@@ -315,7 +409,6 @@ const runeFill=()=>{
                 }
             }
         }
-        console.log(runeLib)
     })
 }
 

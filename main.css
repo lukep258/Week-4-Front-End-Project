@@ -1,14 +1,19 @@
-body{
-    margin:0;
-    background: url('https://media.tenor.com/3mKtNnJtDV4AAAAd/jhin.gif') repeat center;
-    background-size:cover;
-    background-repeat: no-repeat;
-    height:100vh;
-}
 em{
     font-family:"Berthold Akzidenz Condensed";
     font-weight:900;
     font-style: italic;
+}
+video{
+    position: absolute;
+    object-fit: cover;
+    filter: brightness(70%);
+    width: 100vw;
+    height:100vh;
+    z-index:-1;
+    overflow-clip-margin:content-box;
+}
+body{
+    margin:0;
 }
 
 
@@ -17,14 +22,14 @@ em{
 #header{
     display: flex;
     width:100%;
-    height:10%;
+    height:5%;
     margin: 0;
     background-color: black;
 }
 h1{
     margin: auto 0 auto 1%;
     font-family:"Berthold Akzidenz Condensed";
-    font-size: 5vh;
+    font-size: 3vh;
     font-weight:900;
     font-style: italic;
     color: yellow;
@@ -89,7 +94,7 @@ h2{
 
 #resultHeader{
     width:100%;
-    height:10%;
+    height:3.5vh;
     margin: 0;
     background-color: black;
     display:none;
@@ -97,11 +102,12 @@ h2{
 #followinputstuff{
     display:flex;
     width:30%;
-    height:50%;
+    height:80%;
     background-color: white;
     border:2px solid white;
     border-radius: 1vw;
     margin: auto 0 auto 3%;
+    box-sizing: border-box;
 }
 #followInputBackground{
     height:100%;
@@ -111,11 +117,11 @@ h2{
     background-repeat: no-repeat;
 }
 #followupInput{
-    width:80%;
+    width:90%;
     height:100%;
     border:2px solid white;
     box-sizing: border-box;
-    font-size: 2vw;
+    font-size: 1vw;
 }
 #followupInput:focus{
     outline:none;
@@ -127,33 +133,105 @@ h2{
 #resultBody{
     margin:1% auto 0 auto;
     width:800px;
-    height:85%;
-    background-color: black;
+    background-color: #000000b9;
     display: none;
+    flex-wrap:wrap;
+    height: 90vh;
     padding-top:1%;
 }
+#titleContainer{
+    height:20%;
+    width:40%;
+    margin: 2% 0 0 1%;
+    display:flex;
+}
 h3{
-    margin: 0 0 5% 2% ;
+    height:20%;
+    width: 100%;
+    margin:0 0 4% 0;
     color:white;
-    font-size:100%;
+    font-size:200%;
     font-family: arial;
 }
+#searchedChamp{
+    margin: 2% 4% 0 3%;
+    height: 90%;
+    aspect-ratio: 1;
+    border: 0.5px solid white;
+    background-size: cover;
+    background-color:rgb(44, 44, 44);
+}
+#gamesPlayed, #winRate{
+    font-size: 80%;
+    margin:0 0 5% 2%;
+    font-size:80%;
+    color:white;
+}
+#countersAndPlayInto{
+    margin: 5% 0 0 20%;
+    height:150px;
+    width:30%;
+}
+#counters{
+    height:70px;
+    width:100%;
+    margin: 0 0 5% 0;
+}
+#winsAgainst{
+    height:70px;
+    width:100%;
+}
+.counterText{
+    color:white;
+    font-size: 1.5vh;
+    margin:0;
+}
+.playAgainst{
+    display:flex;
+}
+.counterImage{
+    height: 40px;
+    aspect-ratio: 1;
+    background-size: cover;
+    background-color:rgb(44, 44, 44);
+}
+.counterChance{
+    color:white;
+    font-size: 1vw;
+    margin:0;
+}
+.buildListMargin{
+    height:70px;
+}
 #buildList{
-    background-color: black;
-    margin: 1% auto 0 auto;
-    height:90%;
+    background-color: #00000060;
+    margin: 0 auto 0 auto;
     width:90%;
-    border: 2px solid grey;
+    height:60vh;
+    border: 2px solid rgb(24, 24, 24);
     box-sizing: border-box;
     padding: 0;
     cursor: pointer;
     overflow-y:scroll;
 }
+#buildList::-webkit-scrollbar{
+    width:5px;
+}
+#buildList::-webkit-scrollbar-track{
+    background: none;
+}
+#buildList::-webkit-scrollbar-thumb{
+    background: yellow;
+    border-radius:3px;
+
+}
 li{
     display:flex block;
     color: white;
-    border-bottom: 2px solid rgb(47, 47, 47);
     height: 70px;
+}
+li:hover{
+    border:1px solid yellow;
 }
 .listTime{
     margin-top:auto;
@@ -161,7 +239,15 @@ li{
     margin-left:1%;
     width:7.5%;
 }
-.champIcon, .rune, .item1, .item2, .item3, .item4, .item5, .item6, .item7, .summoner1, .summoner2{
+.champIcon{
+    margin-top:auto;
+    margin-bottom:auto;
+    height: 30px;
+    aspect-ratio: 1;
+    background-size: cover;
+    background-color:rgb(44, 44, 44);
+}
+.enemyChamp, .rune, .item1, .item2, .item3, .item4, .item5, .item6, .item7, .summoner1, .summoner2{
     margin-top:auto;
     margin-bottom:auto;
     height: 30px;
@@ -173,21 +259,27 @@ li{
 .listPlayer{
     margin-top:auto;
     margin-bottom:auto;
-    margin-left: 3%;
-    width:10%;
+    margin-left: 1%;
+    width:14%;
+    flex-wrap: wrap;
+    overflow-x:hidden;
 }
 .listKDA{
     margin-top:auto;
     margin-bottom:auto;
-    margin-left:5%;
-    width:5%;
+    margin-left:1%;
+    width:8%;
 }
 .champIcon{
     margin-left:2%;
 }
+.enemyChamp{
+    margin-left: 1%;
+}
 .rune{
     margin-left:5%;
-    margin-right:3%;
+    margin-right:1%;
+    border-radius: 100%;
 }
 .item1, .item2, .item3, .item4, .item5, .item6, .item7{
     margin-left:0.5%;

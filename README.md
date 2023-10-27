@@ -29,7 +29,7 @@ playerSample{
 MATCHES is obj of objs
 matches{
     matchId1:{
-        participants: [
+        participant: [
             0:{
                 summonerName: abc,
                 champion: aatrox,
@@ -54,6 +54,13 @@ matches{
         gameStart: yyyymmddhhmm
         gameDuration: mmss
         winners: team#
+        laners:{
+            TOP:[],
+            MIDDLE:[],
+            BOTTOM:[],
+            UTILITY:[],
+            JUNGLE:[]
+        }
     }
     matchId2:{...}
     matchId3:{...}
@@ -71,7 +78,18 @@ championsHistory{
     akali: {...}
 }
 
+runeLib{
+    runeid1: [runetype,runename],
+    runeid2: [...],
+    runeid3: [...],
+    ...
+}
 
+summSpellLib{
+    summonerSpellId1: summonerSpellName1,
+    summonerSpellId2: summonerSpellName2,
+    ...
+}
 */
 
 
