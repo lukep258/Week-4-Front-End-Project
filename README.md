@@ -1,5 +1,5 @@
 # Week-4-Front-End-Project
-Front End Project
+Front End Project: BuildStat, Riot Games API
 
 
 //potential request count per loop: 12601
@@ -76,6 +76,7 @@ championsHistory{
         }
     ahri: {...}
     akali: {...}
+    ...
 }
 
 runeLib{

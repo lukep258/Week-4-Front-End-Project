@@ -22,7 +22,6 @@ const init = () =>{
     })
     homeButton.addEventListener('click',displayHome)
 
-    // displaySearch(homeBody,homeHeader,followBody,followHeader,'olaf')
     summSpellFill()
     runeFill()
     sampleGather()
