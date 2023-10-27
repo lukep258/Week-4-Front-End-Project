@@ -390,7 +390,7 @@ const sortMatchesbyTime=(champion)=>{
     championHistory[champion]=matchHistoryCopy
 }
 const summSpellFill=()=>{
-    fetch('http://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/summoner.json')
+    fetch('https://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/summoner.json')
     .then(response=>response.json())
     .then(data=>{
         for(spell in data.data){
