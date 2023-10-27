@@ -1,6 +1,6 @@
 body{
     margin:0;
-    background: url('https://38.media.tumblr.com/61b0b7dc6b64a2ddc76b1ad3f4e0b4b3/tumblr_nlo1tjd1qy1upbybro1_1280.gif') repeat center;
+    background: url('https://media.tenor.com/3mKtNnJtDV4AAAAd/jhin.gif') repeat center;
     background-size:cover;
     background-repeat: no-repeat;
     height:100vh;
@@ -22,7 +22,7 @@ em{
     background-color: black;
 }
 h1{
-    margin: auto 0 auto 0;
+    margin: auto 0 auto 1%;
     font-family:"Berthold Akzidenz Condensed";
     font-size: 5vh;
     font-weight:900;
@@ -166,7 +166,9 @@ li{
     margin-bottom:auto;
     height: 30px;
     aspect-ratio: 1;
-    border: 0.5px solid white
+    border: 0.5px solid white;
+    background-size: cover;
+    background-color:rgb(44, 44, 44);
 }
 .listPlayer{
     margin-top:auto;

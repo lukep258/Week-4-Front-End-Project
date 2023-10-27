@@ -45,7 +45,7 @@ matches{
                 ccImpact:1
                 cs:1
                 team: 0
-                summonerspells:[1,2]
+                summonerSpells:[1,2]
                 runes:[1,2,3,4,5,6,7,8,9]
             },
             1:{...},
@@ -70,6 +70,8 @@ championsHistory{
     ahri: {...}
     akali: {...}
 }
+
+
 */
 
 
