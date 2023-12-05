@@ -19,25 +19,15 @@ PLAYERSAMPLE objs of objs
 playerSample{
 
     summonerId1:{
-    
         summonerName: abc
-        
         wins: 1
-        
         losses: 1
-        
         puuid: abc
-        
         matches: [matchId1,matchId2,matchId3...] 
-        
         }
-        
     }
-    
     summonerId2: {...}
-    
     summonerId3: {...}
-    
 }
 
 
@@ -46,77 +36,41 @@ MATCHES is obj of objs
 matches{
 
     matchId1:{
-    
         participant: [
-        
             0:{
-            
                 summonerName: abc,
-                
                 champion: aatrox,
-                
                 level: 1,
-                
                 position: top,
-                
                 goldEarned: 1,
-                
                 items: ['longsword','longsword','black cleaver']
-                
                 kda: [1,2,3],
-                
                 damageDealt: 1,
-                
                 damageTaken: 1,
-                
                 team: 1
-                
                 visionScore: 1
-                
                 ccImpact:1
-                
                 cs:1
-                
                 team: 0
-                
                 summonerSpells:[1,2]
-                
                 runes:[1,2,3,4,5,6,7,8,9]
-                
             },
-            
             1:{...},
-            
             2:{...}
-            
         ]
-        
         gameStart: yyyymmddhhmm
-        
         gameDuration: mmss
-        
         winners: team#
-        
         laners:{
-        
             TOP:[],
-            
             MIDDLE:[],
-            
             BOTTOM:[],
-            
             UTILITY:[],
-            
             JUNGLE:[]
-            
         }
-        
     }
-    
     matchId2:{...}
-    
     matchId3:{...}
-    
 }
 
 
@@ -136,6 +90,7 @@ championsHistory{
 }
 
 runeLib{
+
     runeid1: [runetype,runename],
     runeid2: [...],
     runeid3: [...],
@@ -143,6 +98,7 @@ runeLib{
 }
 
 summSpellLib{
+
     summonerSpellId1: summonerSpellName1,
     summonerSpellId2: summonerSpellName2,
     ...
@@ -154,7 +110,7 @@ summSpellLib{
 
 
 /*
-todo list:
+todo list
 1. champion search/picker
 2. most recent games on champions by challenger players (NA)
 2b. win or loss
@@ -165,12 +121,4 @@ todo list:
 x6. click game for more details
 x7. filter by region
 x8. filter by gamemode
-*/
-
-/*
-"puuid": "g8RRvpV6rpK3g7R78cKhltViqeveroIZJ0APEkEx4gCtZ4PZzK3rldL28263LoWy3C6BqQxtURtYFg",
-"gameName": "PizzaBoi",
-"tagLine": "NA1",
-"accountId": "rfqBYkylLqoJT4pIq2dKcvH84ITl87ohzwZr5gLwcwRGLQ"
-"id": "YNYqEOTdbaZM2vXA4EPyuhY4Z-JO4wgshrWVu0OivqsGQg4"
 */
