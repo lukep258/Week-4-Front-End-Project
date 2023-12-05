@@ -2,8 +2,7 @@
 Front End Project: BuildStat, Riot Games API
 
 ![image](https://github.com/lukep258/Week-4-Front-End-Project/assets/143543147/dae558ef-0ff7-488f-946d-778f7197740a)
-![Uploading image.png…]()
-
+![image](https://github.com/lukep258/Week-4-Front-End-Project/assets/143543147/988185f5-725f-4a65-95f5-cb03c1a0bfc3)
 
 
 //potential request count per loop: 12601
